@@ -1,8 +1,0 @@
-<h1>To Do</h1>
-
-<p><%= @todo.name%> </p>
-
-<form action="/todo/<%=@todo.id%>" method="post">
-  <input type="hidden" name="_method" value="delete">
-  <input type="submit" value="Delete">
-</form>

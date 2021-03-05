@@ -1,47 +1,60 @@
 class TodoController < ApplicationController
   
-    get "/todo" do
+    get "/todos" do
+        redirect_if_not_logged_in
         @todos = Todo.all
-        erb :index
+        erb :'todos/index'
     end
 
-    get "/todo/new" do
-        erb :'todo/new_todo'
+    get '/todos/new' do
+        redirect_if_not_logged_in
+        erb :'todos/new'
     end
     
-    post "/todo" do
+    post "/todos" do
         #binding.pry
-        todo = Todo.create(name: params[:name])
-        user = User.find_by(id: session[:user_id])
-        user.todos << todo
-        erb :'todo/show'
-    end
-    get '/todo/:id' do
-        @todo = Todo.find_by(id: params[:id])
-        if !@todo
-            redirect '/todo'
+        redirect_if_not_logged_in
+       
+
+        todo = current_user.todos.create(params[:todo])
+        if todo.valid?
+            redirect "todos/#{todo.id}"
+        else
+            flash[:message] = todo.errors.full_messages
+            redirect '/todos/new'
         end
-        erb :'todo/show'
     end
 
-    get '/todo/:id/edit' do
+    get '/todos/:id' do
         @todo = Todo.find_by(id: params[:id])
         if !@todo
-            redirect '/todo'
+            redirect '/todos'
         end
-        erb :'todo/edit'
+        erb :'todos/show'
     end
-    patch '/todo/:id' do
+
+    get '/todos/:id/edit' do
+        @todo = Todo.find_by(id: params[:id])
+        if !@todo
+            redirect '/todos'
+        end
+        erb :'todos/edit'
+    end
+    patch '/todos/:id' do
         #binding.pry
         todo = Todo.find_by(id: params[:id])
-        todo.update(name: params[:name])
-        erb :'todo/show'
+       todo.update(name: params[:name])
+        erb :'todos/show'
     end
-    delete '/todo/:id' do
-        todo = Todo.find_by(id: params[:id])
-        todo.delete
-        
-        redirect('/todo')
+    delete '/todos/:id' do
+        redirect_if_not_logged_in
+        set_todo
+        if check_owner(@todo)
+          @todo.delete
+          redirect('/todos')
+        else
+          # set up error message
+          erb :'todos/show'
+        end
     end
-   
 end

@@ -1,0 +1,14 @@
+<h1>To Do</h1>
+
+<p><%= @todo.name%></p>
+
+
+
+<% if check_owner(@todo) %>
+  <form action="/todos/<%=@todo.id%>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete">
+  </form>
+
+  <a href="/todos/<%=@todo.id%>/edit">Change your Doable</a>
+<%end %>

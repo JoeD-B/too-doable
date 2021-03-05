@@ -1,0 +1,8 @@
+<h1>All Doables</h1>
+<%=flash[:message]%>
+<ul>
+  <% @todos.each do |todo| %>
+    <li><a href="/todos/<%=todo.id%>"><%=todo.name%></a></li>
+  <%end%>
+
+</ul>

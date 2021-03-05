@@ -4,25 +4,31 @@ class UserController < ApplicationController
         if session[:user_id]
           redirect "/users/#{session[:user_id]}"
         end
-        erb :'user/signup'
+        erb :'users/signup'
     end
     
-    post '/users' do
+    post '/signup' do
+        #binding.pry
         u = User.create(params[:user])
-        session[:user_id] = u.id
-        redirect "/users/#{u.id}"
+        
+        if u.id
+            session[:user_id] = u.id
+            redirect "/users/#{u.id}"
+        else
+            erb :'/users/signup'
+        end
     end
     
     get '/users/:id' do
           @user = User.find_by(id: params[:id])
-          erb :'user/show'
+          erb :'users/show'
     end
     
     get '/login' do
         if session[:user_id]
           redirect "/users/#{session[:user_id]}"
         end
-        erb :'user/login'
+        erb :'users/login'
     end
     
     post '/login' do
@@ -32,7 +38,7 @@ class UserController < ApplicationController
           session[:user_id] = user.id
           redirect "/users/#{user.id}"
         else
-          erb :'user/login'
+          erb :'users/login'
         end
     end
     
@@ -40,7 +46,11 @@ class UserController < ApplicationController
         session.clear
         redirect '/login'
     end
-    
+    get '/users' do
+        redirect_if_not_logged_in
+        @users = User.all
+        erb :'users/index'
+    end
   
 end
   

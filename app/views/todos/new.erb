@@ -1,0 +1,12 @@
+
+
+<%flash[:message] && flash[:message].each do |m| %>
+  <li><%=m%></li>
+<%end%>
+
+
+<form action="/todos" method="post">
+  <label>Doable: </label>
+  <input type="text" name="todo[name]">
+  <input type="submit">
+</form>
