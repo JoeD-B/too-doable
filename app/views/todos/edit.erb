@@ -1,10 +1,10 @@
 <h1>Edit Doables</h1>
 
 
-<form action="/todos/<%=@todos.id %>" method="post">
+<form action="/todos/<%=@todo.id %>" method="post">
   <input type="hidden" name="_method" value="patch">
   <label>Doable: </label>
-  <input type="text" name="name" value="<%=@todos.name%>">
+  <input type="text" name="todo[name]" value="<%=@todo.name%>">
   <input type="submit">
 </form>
 

@@ -2,7 +2,7 @@ class TodoController < ApplicationController
   
     get "/todos" do
         redirect_if_not_logged_in
-        @todos = Todo.all
+        @todos = current_user.todos#Todo.all(use this to access all users items)
         erb :'todos/index'
     end
 
@@ -34,16 +34,19 @@ class TodoController < ApplicationController
     end
 
     get '/todos/:id/edit' do
-        @todo = Todo.find_by(id: params[:id])
-        if !@todo
-            redirect '/todos'
-        end
+        redirect_if_not_logged_in
+        set_todo
+        redirect_if_not_owner(@todo)
         erb :'todos/edit'
     end
+    
+
     patch '/todos/:id' do
-        #binding.pry
-        todo = Todo.find_by(id: params[:id])
-       todo.update(name: params[:name])
+        redirect_if_not_logged_in
+        set_todo
+        if check_owner(@todo)
+            @todo.update(params[:todo])
+        end
         erb :'todos/show'
     end
     delete '/todos/:id' do

@@ -1,11 +1,11 @@
 <head>
   <link href="fancy.css" rel="alternate stylesheet" type="text/css" title="Fancy">
-<img src="images/too-doable-header.png" width="200" height="40" class="img-responsive main-image">
+<img src="/images/too-doable-header.png" width="200" height="40" class="img-responsive main-image">
 
 <br>
 <body>
   <% if current_user%>
-    <a href="/todos">All Doables</a> | <a href="/todos/new">New Doable</a> | <a href="/logout">Log Out</a> | <a href="/users">Users</a>
+    <a href="/todos">Doables</a> | <a href="/todos/new">New Doable</a> | <a href="/logout">Log Out</a> | <a href="/users">Users</a>
     <%else %>
     <a href="/login">Login</a> | <a href="/signup">Signup</a>
     <%end%>
