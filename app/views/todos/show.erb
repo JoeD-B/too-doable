@@ -2,8 +2,6 @@
 
 <p><%= @todo.name%></p>
 
-
-
 <% if check_owner(@todo) %>
   <form action="/todos/<%=@todo.id%>" method="post">
     <input type="hidden" name="_method" value="delete">

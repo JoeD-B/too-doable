@@ -49,6 +49,7 @@ class TodoController < ApplicationController
         end
         erb :'todos/show'
     end
+    
     delete '/todos/:id' do
         redirect_if_not_logged_in
         set_todo
