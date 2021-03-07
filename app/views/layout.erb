@@ -1,9 +1,14 @@
 <head>
-  <link href="fancy.css" rel="alternate stylesheet" type="text/css" title="Fancy">
-<img src="/images/too-doable-header.png" width="200" height="40" class="img-responsive main-image">
-
+  <link href="/css/bootstrap.css" rel="stylesheet">
+  <link href="/css/bootstrap-responsive.css" rel="stylesheet">
+  <style>
+  body {background-color: coral;}
+  </style>
+  <a href="/" style="font-size:150
+  %;">TOo DOable</a>
+</head>
 <br>
-<body>
+<body style="color:lavender">
   <% if current_user%>
     <a href="/todos">Doables</a> | <a href="/todos/new">New Doable</a> | <a href="/logout">Log Out</a> | <a href="/users">Users</a>
     <%else %>
